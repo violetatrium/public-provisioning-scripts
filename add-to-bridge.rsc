@@ -25,11 +25,13 @@
 }
 
 # conditionally add wireless ifaces to bridge and config authentication settings
-:if ([:len [/interface find where name="wlan1"]] = 1) do={
+:local interfaceAlreadyBridged [:len [/interface bridge port find interface=wlan1]];
+:if (([:len [/interface find where name="wlan1"]] = 1) && ( $interfaceAlreadyBridged = 0)) do={
   /interface bridge port add bridge=bridge comment=defconf interface=wlan1;
   /interface wireless set wlan1 mode=ap-bridge hide-ssid=no disabled=no ssid="NewTik";
 }
-:if ([:len [/interface find where name="wlan2"]] = 1) do={
+:local interfaceAlreadyBridged [:len [/interface bridge port find interface=wlan2]];
+:if (([:len [/interface find where name="wlan2"]] = 1) && ( $interfaceAlreadyBridged = 0)) do={
   /interface bridge port add bridge=bridge comment=defconf interface=wlan2;
   /interface wireless set wlan2 mode=ap-bridge hide-ssid=no disabled=no ssid="NewTik";
 }
