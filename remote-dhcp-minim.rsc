@@ -3,6 +3,17 @@
 :beep frequency=523 length=300ms;
 delay 1000ms;
 
+/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/firewall-minim.rsc" dst-path=/flash/firewall-minim.rsc mode=https
+:beep frequency=500 length=200ms;
+:beep frequency=600 length=200ms;
+
+/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/minim-networks.rsc" dst-path=/flash/minim-networks.rsc mode=https
+:beep frequency=500 length=200ms;
+:beep frequency=600 length=200ms;
+
+/system script add name=firewall-minim.rsc owner=admin policy=password,policy,read,reboot,sensitive,sniff,test,write source=[/file get flash/firewall-minim.rsc contents]
+/system script add name=minim-networks.rsc owner=admin policy=password,policy,read,reboot,sensitive,sniff,test,write source=[/file get flash/minim-networks.rsc contents]
+
 # wait for some interfaces to come up
 :global secondNumber 0;
 :while ($secondNumber <= 30) do={
@@ -63,4 +74,9 @@ add address=192.168.88.0/24 comment=defconf gateway=192.168.88.1
 /ip dns
 set allow-remote-requests=yes servers=1.1.1.1,8.8.4.4
 
+/system script run firewall-minim.rsc
+/system script run minim-networks.rsc
+
+delay 2000ms;
 :beep frequency=523 length=600ms;
+
