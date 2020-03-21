@@ -3,6 +3,10 @@
 :beep frequency=523 length=300ms;
 delay 1000ms;
 
+# clean up previous versions
+/system script remove firewall-minim.rsc 
+/system script remove minim-networks.rsc
+
 /tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/firewall-minim.rsc" dst-path=/flash/firewall-minim.rsc mode=https
 delay 5000ms;
 :beep frequency=500 length=200ms;
