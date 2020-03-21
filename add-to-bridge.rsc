@@ -3,8 +3,10 @@
 :foreach iface in=[/interface find type=ether] do={
   :global portName [/interface get value-name=name $iface];
   :if ([:len [/interface find name=$portName comment=WAN]] = 0) do={
-    :log info ("Adding " . $portName . " to bridge");
-    /interface bridge port add bridge=bridge comment=defconf interface=$portName;
+    if ([:len [/interface bridge port find interface=$portName]] = 0 do={
+      :log info ("Adding " . $portName . " to bridge");
+      /interface bridge port add bridge=bridge comment=defconf interface=$portName;
+    }
   } else={
     :log info ("Not adding " . $portName . " to bridge as it is considered the WAN port");
   }
@@ -13,8 +15,10 @@
 :foreach iface in=[/interface find type=sfp] do={
   :global portName [/interface get value-name=name $iface];
   :if ([:len [/interface find name=$portName comment=WAN]] = 0) do={
-    :log info ("Adding " . $portName . " to bridge");
-    /interface bridge port add bridge=bridge comment=defconf interface=$portName;
+    if ([:len [/interface bridge port find interface=$portName]] = 0 do={
+      :log info ("Adding " . $portName . " to bridge");
+      /interface bridge port add bridge=bridge comment=defconf interface=$portName;
+    }
   } else={
     :log info ("Not adding " . $portName . " to bridge as it is considered the WAN port");
   }
