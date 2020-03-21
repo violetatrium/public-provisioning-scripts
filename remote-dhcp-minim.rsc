@@ -4,10 +4,12 @@
 delay 1000ms;
 
 /tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/firewall-minim.rsc" dst-path=/flash/firewall-minim.rsc mode=https
+delay 5000ms;
 :beep frequency=500 length=200ms;
 :beep frequency=600 length=200ms;
 
 /tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/minim-networks.rsc" dst-path=/flash/minim-networks.rsc mode=https
+delay 5000ms;
 :beep frequency=500 length=200ms;
 :beep frequency=600 length=200ms;
 
