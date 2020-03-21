@@ -2,7 +2,9 @@
 
 :foreach iface in=[/interface find type=ether] do={
   :global portName [/interface get value-name=name $iface];
-  :if ([:len [/interface find name=$portName comment=WAN]] = 0 and [:len [/interface bridge port find interface=$portName]] = 0) do={
+  :global interfaceIsWAN = [:len [/interface find name=$portName comment=WAN]];
+  :global interfaceAlreadyBridged = [:len [/interface bridge port find interface=$portName]];
+  :if ( $interfaceIsWAN < 1 and $interfaceAlreadyBridged < 1) do={
     :put info ("Adding " . $portName . " to bridge");
     /interface bridge port add bridge=bridge comment=defconf interface=$portName;
   } else={
