@@ -6,6 +6,12 @@ delay 1000ms;
 # clean up previous versions
 /system script remove firewall-minim.rsc 
 /system script remove minim-networks.rsc
+/system script remove add-to-bridge.rsc
+
+/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/add-to-bridge.rsc" dst-path=/flash/add-to-bridge.rsc mode=https
+delay 5000ms;
+:beep frequency=500 length=200ms;
+:beep frequency=600 length=200ms;
 
 /tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/firewall-minim.rsc" dst-path=/flash/firewall-minim.rsc mode=https
 delay 5000ms;
@@ -17,6 +23,7 @@ delay 5000ms;
 :beep frequency=500 length=200ms;
 :beep frequency=600 length=200ms;
 
+/system script add name=add-to-bridge.rsc owner=admin policy=password,policy,read,reboot,sensitive,sniff,test,write source=[/file get flash/add-to-bridge.rsc contents]
 /system script add name=firewall-minim.rsc owner=admin policy=password,policy,read,reboot,sensitive,sniff,test,write source=[/file get flash/firewall-minim.rsc contents]
 /system script add name=minim-networks.rsc owner=admin policy=password,policy,read,reboot,sensitive,sniff,test,write source=[/file get flash/minim-networks.rsc contents]
 
@@ -46,6 +53,9 @@ delay 5000ms;
   :log info "Adding LAN"
   /interface list add comment=defconf name=LAN
 }
+
+:log info "running add-to-bridge script"
+/system script run add-to-bridge.rsc
 
 :if ( [/ip pool find where name=default-dhcp] = "") do={
   :log info "Adding default DHCP pool"
