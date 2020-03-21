@@ -34,11 +34,16 @@ delay 5000ms;
 
 :delay 10;
 
-/interface bridge
-add comment=defconf name=bridge
-/interface list
-add comment=defconf name=WAN
-add comment=defconf name=LAN
+:if ( [/interface bridge find where name=bridge] = "") do={
+/interface bridge add comment=defconf name=bridge
+}
+:if ( [/interface find where name="WAN"] = "") do={
+/interface list add comment=defconf name=WAN
+}
+:if ( [/interface find where name="LAN"] = "") do={
+/interface list add comment=defconf name=LAN
+}
+
 /ip pool
 add name=default-dhcp ranges=192.168.88.10-192.168.88.254
 /ip dhcp-server
