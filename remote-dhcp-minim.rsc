@@ -64,7 +64,8 @@ delay 500ms;
   :log info "Adding default DHCP pool"
   /ip pool add name=default-dhcp ranges=192.168.88.10-192.168.88.254
 }
-:if ( [/ip dhcp-server find where name=default-dhcp] = "") do={
+:local DHCPPoolExists [:len [/ip dhcp-server find address-pool=default-dhcp]]
+:if (($DHCPPoolExists = 0 ) && ([/ip dhcp-server find where name=default-dhcp] = "")) do={
   :log info "Adding DHCP pool to server"
   /ip dhcp-server add address-pool=default-dhcp disabled=no interface=bridge name=defconf
 }
