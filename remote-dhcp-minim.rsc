@@ -3,10 +3,10 @@
 :beep frequency=523 length=300ms;
 delay 1000ms;
 
-# clean up previous versions
-/system script remove firewall-minim.rsc 
-/system script remove minim-networks.rsc
-/system script remove add-to-bridge.rsc
+# clean up previous versions - won't work if they don't exist, do at end
+#/system script remove firewall-minim.rsc 
+#/system script remove minim-networks.rsc
+#/system script remove add-to-bridge.rsc
 
 /tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/add-to-bridge.rsc" dst-path=/flash/add-to-bridge.rsc mode=https
 delay 5000ms;
@@ -87,4 +87,8 @@ set allow-remote-requests=yes servers=1.1.1.1,8.8.4.4
 
 delay 2000ms;
 :log info "finished remote-dhcp-minim.rsc"
+# clean up 
+/system script remove firewall-minim.rsc 
+/system script remove minim-networks.rsc
+/system script remove add-to-bridge.rsc
 :beep frequency=523 length=600ms;
