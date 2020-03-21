@@ -1,8 +1,8 @@
-:log info "Adding interfaces to the bridge"
+:log info "Adding interfaces to the bridge";
 
 :foreach iface in=[/interface find type=ether] do={
   :global portName [/interface get value-name=name $iface];
-  :if( [/interface find name=$iface comment="WAN"] = "" do={
+  :if( [/interface find name=$iface comment="WAN"] = "") do={
     :log info ("Adding " . $portName . " to bridge");
     /interface bridge port add bridge=bridge comment=defconf interface=$portName;
   } else={
