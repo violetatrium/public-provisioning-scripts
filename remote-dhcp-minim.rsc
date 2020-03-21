@@ -66,15 +66,6 @@ delay 5000ms;
     :log info ("Not adding " . $portName . " to bridge as it is considered the WAN port");
   }
 }
-:foreach iface in=[/interface find type=sfp] do={
-  :global portName [/interface get value-name=name $iface];
-  :if( [/interface find name=$iface comment="WAN"] = "" do={
-    :log info ("Adding " . $portName . " to bridge");
-    /interface bridge port add bridge=bridge comment=defconf interface=$portName;
-  } else={
-    :log info ("Not adding " . $portName . " to bridge as it is considered the WAN port");
-  }
-}
 
 # conditionally add wireless ifaces to bridge and config authentication settings
 :if ([:len [/interface find where name="wlan1"]] = 1) do={
