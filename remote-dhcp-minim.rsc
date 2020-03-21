@@ -48,9 +48,11 @@ delay 5000ms;
 }
 
 :if ( [/ip pool find where name=default-dhcp] = "") do={
+  :log info "Adding default DHCP pool"
   /ip pool add name=default-dhcp ranges=192.168.88.10-192.168.88.254
 }
 :if ( [/ip dhcp-server find where name=default-dhcp] = "") do={
+  :log info "Adding DHCP pool to server"
   /ip dhcp-server add address-pool=default-dhcp disabled=no interface=bridge name=defconf
 }
 :log info "Adding interfaces to the bridge"
