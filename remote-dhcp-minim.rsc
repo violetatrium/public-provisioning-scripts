@@ -1,4 +1,4 @@
-:log error "Minim setup initiated"
+:log info "Minim setup initiated"
 
 :beep frequency=523 length=300ms;
 delay 1000ms;
@@ -35,13 +35,16 @@ delay 5000ms;
 :delay 10;
 
 :if ( [/interface bridge find where name=bridge] = "") do={
-/interface bridge add comment=defconf name=bridge
+  :log info "Adding bridge"
+  /interface bridge add comment=defconf name=bridge
 }
 :if ( [/interface list find where name=WAN] = "") do={
-/interface list add comment=defconf name=WAN
+  :log info "Adding WAN"
+  /interface list add comment=defconf name=WAN
 }
 :if ( [/interface list find where name=LAN] = "") do={
-/interface list add comment=defconf name=LAN
+  :log info "Adding LAN"
+  /interface list add comment=defconf name=LAN
 }
 
 /ip pool
@@ -49,7 +52,7 @@ add name=default-dhcp ranges=192.168.88.10-192.168.88.254
 /ip dhcp-server
 add address-pool=default-dhcp disabled=no interface=bridge name=defconf
 
-:log error "Adding interfaces to the bridge"
+:log info "Adding interfaces to the bridge"
 
 :foreach iface in=[/interface find type=ether] do={
   :global portName [/interface get value-name=name $iface];
@@ -85,9 +88,11 @@ add address=192.168.88.0/24 comment=defconf gateway=192.168.88.1
 /ip dns
 set allow-remote-requests=yes servers=1.1.1.1,8.8.4.4
 
+:log info "running firewall script"
 /system script run firewall-minim.rsc
+:log info "finished firewall script, started minim-networks"
 /system script run minim-networks.rsc
 
 delay 2000ms;
+:log info "finished remote-dhcp-minim.rsc"
 :beep frequency=523 length=600ms;
-
