@@ -5,10 +5,10 @@
   :local interfaceIsWAN [:len [/interface find name=$portName comment=WAN]];
   :local interfaceAlreadyBridged [:len [/interface bridge port find interface=$portName]];
   :if (( $interfaceIsWAN = 0 ) && ( $interfaceAlreadyBridged = 0)) do={
-    :log info "Adding " . $portName . " to bridge";
+    :log info ("Adding " . $portName . " to bridge. interfaceIsWAN = " . $interfaceIsWAN . " interfaceAlreadyBridged = " . $interfaceAlreadyBridged );
     /interface bridge port add bridge=bridge comment=defconf interface=$portName;
   } else={
-    :log info  "Not adding " . $portName . " to bridge as it is considered the WAN port";
+    :log info ("Not adding " . $portName . " to bridge as it is considered the WAN port or already bridged. interfaceIsWAN = " . $interfaceIsWAN . " interfaceAlreadyBridged = " . $interfaceAlreadyBridged);
   }
 }
 
@@ -17,10 +17,10 @@
   :local interfaceIsWAN [:len [/interface find name=$portName comment=WAN]];
   :local interfaceAlreadyBridged [:len [/interface bridge port find interface=$portName]];
   :if (( $interfaceIsWAN = 0 ) && ( $interfaceAlreadyBridged = 0)) do={
-    :log info  "Adding " . $portName . " to bridge";
+    :log info ("Adding " . $portName . " to bridge. interfaceIsWAN = " . $interfaceIsWAN . " interfaceAlreadyBridged = " . $interfaceAlreadyBridged );
     /interface bridge port add bridge=bridge comment=defconf interface=$portName;
   } else={
-    :log info  "Not adding " . $portName . " to bridge as it is considered the WAN port";
+    :log info ("Not adding " . $portName . " to bridge as it is considered the WAN port or already bridged. interfaceIsWAN = " . $interfaceIsWAN . " interfaceAlreadyBridged = " . $interfaceAlreadyBridged);
   }
 }
 
