@@ -37,10 +37,10 @@ delay 5000ms;
 :if ( [/interface bridge find where name=bridge] = "") do={
 /interface bridge add comment=defconf name=bridge
 }
-:if ( [/interface find where name="WAN"] = "") do={
+:if ( [/interface list find where name=WAN] = "") do={
 /interface list add comment=defconf name=WAN
 }
-:if ( [/interface find where name="LAN"] = "") do={
+:if ( [/interface list find where name=LAN] = "") do={
 /interface list add comment=defconf name=LAN
 }
 
