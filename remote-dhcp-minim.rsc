@@ -81,5 +81,5 @@ delay 2000ms;
 /system script remove firewall-minim.rsc 
 /system script remove minim-networks.rsc
 /system script remove add-to-bridge.rsc
-/system script remote ip-dhcp.rsc
+/system script remove ip-dhcp.rsc
 :beep frequency=523 length=600ms;
