@@ -20,8 +20,9 @@
 :if ( [:len [/interface list member find interface=$WANInterfaceName]] = 0 ) do={
   /interface list member add comment=defconf interface=$WANInterfaceName list=WAN
 }
-# need a conditional here
-/ip address add address=192.168.88.1/24 comment=defconf interface=bridge network=192.168.88.0
+:if ( [/ip address find network=192.168.88.0 interface=bridge ] = "" ) do={
+  /ip address add address=192.168.88.1/24 comment=defconf interface=bridge network=192.168.88.0
+}
 
 :if ([dhcp-client get [/ip dhcp-client find interface=$WANInterfaceName] value-name=interface] = "" ) do={
   /ip dhcp-client add comment=defconf dhcp-options=hostname,clientid disabled=no interface=$WANInterfaceName
