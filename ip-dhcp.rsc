@@ -10,17 +10,13 @@
   /ip dhcp-server add address-pool=default-dhcp disabled=no interface=bridge name=defconf
 }
 
-/ip neighbor discovery-settings
-set discover-interface-list=all
+/ip neighbor discovery-settings set discover-interface-list=all
 
-/interface list member
-:local LANBridged [:len [/interface list member find interface=bridge]];
-:if ( $LANBridged = 0 ) do={
+:if ( [:len [/interface list member find interface=bridge]] = 0 ) do={
   /interface list member add comment=defconf interface=bridge list=LAN
 }
 
-:local WANListMember [:len [/interface list member find interface=$WANInterfaceName]];
-:if ( $WANListMember = 0 ) do={
+:if ( [:len [/interface list member find interface=$WANInterfaceName]] = 0 ) do={
   /interface list member add comment=defconf interface=$WANInterfaceName list=WAN
 }
 
