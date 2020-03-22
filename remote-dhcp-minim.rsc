@@ -2,6 +2,7 @@
 
 :beep frequency=523 length=300ms;
 delay 1000ms;
+:global WANInterfaceName [/interface get [/interface find comment=WAN] name];
 
 # clean up previous versions - won't work if they don't exist, do at end
 #/system script remove firewall-minim.rsc 
@@ -61,8 +62,10 @@ delay 500ms;
 /system script run add-to-bridge.rsc
 
 :if ( [/ip pool find where name=default-dhcp] = "") do={
-  :log info "Adding default DHCP pool"
+  :log info "Adding default DHCP pool";
   /ip pool add name=default-dhcp ranges=192.168.88.10-192.168.88.254
+} else={
+  :log info "Default DHCP Pool Already Exists";
 }
 :local DHCPPoolExists [:len [/ip dhcp-server find address-pool=default-dhcp]]
 :if (($DHCPPoolExists = 0 ) && ([/ip dhcp-server find where name=default-dhcp] = "")) do={
@@ -72,17 +75,28 @@ delay 500ms;
 
 /ip neighbor discovery-settings
 set discover-interface-list=all
+
 /interface list member
-add comment=defconf interface=bridge list=LAN
-add comment=defconf interface=$wanPortName list=WAN
+:local $LANBridged [:len [/interface list member find interface=bridge]];
+:if ( $LANBridged = 0 ) do={
+  /interface list member add comment=defconf interface=bridge list=LAN
+}
+
+:local $WANListMember [:len [/interface list member find interface=$WANInterfaceName]];
+:if ( $WANListMember = 0 ) do={
+  /interface list member add comment=defconf interface=$WANInterfaceName list=WAN
+}
+
 /ip address
 add address=192.168.88.1/24 comment=defconf interface=bridge network=192.168.88.0
-/ip dhcp-client
-add comment=defconf dhcp-options=hostname,clientid disabled=no interface=$wanPortName
-/ip dhcp-server network
-add address=192.168.88.0/24 comment=defconf gateway=192.168.88.1
-/ip dns
-set allow-remote-requests=yes servers=1.1.1.1,8.8.4.4
+
+if ([dhcp-client get [/ip dhcp-client find interface=$WANInterfaceName] value-name=interface]] = "" ) do={
+  /ip dhcp-client add comment=defconf dhcp-options=hostname,clientid disabled=no interface=$WANInterfaceName
+}
+if ([/ip dhcp-server get [/ip dhcp-server find comment=defconf] value-name=address] = "" ) do={
+  /ip dhcp-server network add address=192.168.88.0/24 comment=defconf gateway=192.168.88.1
+}
+/ip dns set allow-remote-requests=yes servers=1.1.1.1,8.8.4.4
 
 :log info "running firewall script"
 /system script run firewall-minim.rsc
