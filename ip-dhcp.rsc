@@ -14,12 +14,12 @@
 set discover-interface-list=all
 
 /interface list member
-:local $LANBridged [:len [/interface list member find interface=bridge]];
+:local LANBridged [:len [/interface list member find interface=bridge]];
 :if ( $LANBridged = 0 ) do={
   /interface list member add comment=defconf interface=bridge list=LAN
 }
 
-:local $WANListMember [:len [/interface list member find interface=$WANInterfaceName]];
+:local WANListMember [:len [/interface list member find interface=$WANInterfaceName]];
 :if ( $WANListMember = 0 ) do={
   /interface list member add comment=defconf interface=$WANInterfaceName list=WAN
 }
