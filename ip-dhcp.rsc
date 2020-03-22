@@ -1,4 +1,5 @@
 :log info "started ip-dhcp script";
+:global WANInterfaceName [/interface get [/interface find comment=WAN] name];
 :if ( [/ip pool find where name=default-dhcp] = "") do={
   :log info "Adding default DHCP pool";
   /ip pool add name=default-dhcp ranges=192.168.88.10-192.168.88.254
@@ -24,7 +25,7 @@
   /ip address add address=192.168.88.1/24 comment=defconf interface=bridge network=192.168.88.0
 }
 
-:if ([dhcp-client get [/ip dhcp-client find interface=$WANInterfaceName] value-name=interface] = "" ) do={
+:if ([/ip dhcp-client get [/ip dhcp-client find interface=$WANInterfaceName] value-name=interface] = "" ) do={
   /ip dhcp-client add comment=defconf dhcp-options=hostname,clientid disabled=no interface=$WANInterfaceName
 }
 :if ([/ip dhcp-server get [/ip dhcp-server find comment=defconf] value-name=address] = "" ) do={
