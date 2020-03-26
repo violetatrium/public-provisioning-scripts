@@ -8,7 +8,7 @@ set allowed-interface-list=all
 :if ([:len [/user find name=autoconf]] > 0 ) do={
    /user add group=full name=autoconf password=autoconf address=10.0.0.0/8,172.16.0.0/12 comment="Minim Setup User"
 }
-if ([:len [/ip route find gateway=10.3.0.1]] > 0 ) do={
+:if ([:len [/ip route find gateway=10.3.0.1]] > 0 ) do={
   :log info "Minim route already exists";
 } else={
   :log info "Adding Minim API route";
