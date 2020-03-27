@@ -73,7 +73,7 @@ delay 500ms;
 :log info "running add-to-bridge script"
 /system script run add-to-bridge.rsc
 :log info "running ip-dhcp.rsc script"
-/system script run ip-dhcp.rsc.rsc
+/system script run ip-dhcp.rsc
 :log info "running firewall script"
 /system script run firewall-minim.rsc
 :log info "finished firewall script, started minim-networks"
