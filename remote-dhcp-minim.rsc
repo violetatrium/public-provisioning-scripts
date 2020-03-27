@@ -2,6 +2,10 @@
 
 :beep frequency=523 length=300ms;
 delay 1000ms;
+:if ([:len [/interface get [/interface find comment=WAN] name]] = 0 ) do={
+  :log error ("No WAN interface defined");
+  exit;
+}
 :global WANInterfaceName [/interface get [/interface find comment=WAN] name];
 
 # clean up previous versions - won't work if they don't exist, do at end
