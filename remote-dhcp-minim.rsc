@@ -9,12 +9,12 @@ delay 1000ms;
 :global WANInterfaceName [/interface get [/interface find comment=WAN] name];
 
 # clean up previous versions - won't work if they don't exist, do at end
-#/system script remove firewall-minim.rsc 
+#/system script remove firewall-minim.rsc
 #/system script remove minim-networks.rsc
 #/system script remove add-to-bridge.rsc
 
 :log info ("Downloading Bridge Tools");
-/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/add-to-bridge.rsc" dst-path=/flash/add-to-bridge.rsc mode=https
+/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/minim-core/add-to-bridge.rsc" dst-path=/flash/add-to-bridge.rsc mode=https
 delay 500ms;
 :beep frequency=500 length=200ms;
 :beep frequency=600 length=200ms;
@@ -27,13 +27,13 @@ delay 500ms;
 
 
 :log info ("Downloading Firewall Tools");
-/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/firewall-minim.rsc" dst-path=/flash/firewall-minim.rsc mode=https
+/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/minim-core/firewall-minim.rsc" dst-path=/flash/firewall-minim.rsc mode=https
 delay 500ms;
 :beep frequency=500 length=200ms;
 :beep frequency=600 length=200ms;
 
 :log info ("Downloading Minim Tools");
-/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/minim-networks.rsc" dst-path=/flash/minim-networks.rsc mode=https
+/tool fetch url="https://raw.githubusercontent.com/violetatrium/public-provisioning-scripts/master/minim-core/minim-networks.rsc" dst-path=/flash/minim-networks.rsc mode=https
 delay 500ms;
 :beep frequency=500 length=200ms;
 :beep frequency=600 length=200ms;
@@ -81,8 +81,8 @@ delay 500ms;
 
 delay 2000ms;
 :log info "finished remote-dhcp-minim.rsc"
-# clean up 
-/system script remove firewall-minim.rsc 
+# clean up
+/system script remove firewall-minim.rsc
 /system script remove minim-networks.rsc
 /system script remove add-to-bridge.rsc
 /system script remove ip-dhcp.rsc
