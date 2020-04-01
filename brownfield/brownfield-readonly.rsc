@@ -2,7 +2,7 @@
 /interface bridge
   add name="minim-opmode" comment="DO NOT EDIT: readonly" disabled=yes
 
-  # add temporary autoconf user
+# add temporary autoconf user
 /user
   add group=full name=autoconf password=autoconf address=10.0.0.0/8,172.16.0.0/12 comment="Minim Setup User"
 
