@@ -4,12 +4,12 @@
 
 # add private route for API gateway
 /ip route
-  add check-gateway=ping distance=1 dst-address=10.0.0.113/32 gateway=10.3.0.1 comment="Minim API Gateway"
+  add check-gateway=ping distance=1 dst-address=10.0.4.0/22 gateway=10.3.0.1 comment="Minim API Gateway"
 
 # add temporary vpn client
 /interface sstp-client
   add connect-to=tikvpn.minim.co disabled=yes name=Minim-setup-VPN password=autoconf \
-  profile=default-encryption user=autoconf comment="Minim setup VPN"
+  profile=default-encryption user=autoconf_minim comment="Minim setup VPN"
 
 # add firewall rule to allow traffic over vpn
 /ip firewall filter
