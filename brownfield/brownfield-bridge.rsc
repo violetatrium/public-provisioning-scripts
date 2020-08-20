@@ -17,7 +17,7 @@
 # add temporary vpn client
 /interface sstp-client
   add connect-to=tikvpn.minim.co disabled=yes name=Minim-setup-VPN password=autoconf \
-  profile=default-encryption user=autoconf_minim comment="Minim setup VPN"
+  profile=Minim user=autoconf_minim comment="Minim setup VPN"
 # add firewall rule to allow traffic over vpn
 /ip firewall filter
   add chain=input action=accept in-interface=Minim-setup-VPN place-before=1 comment="Trust traffic from Minim-setup-VPN"
