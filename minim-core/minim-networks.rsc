@@ -14,6 +14,9 @@ set allowed-interface-list=all
   :log info "Adding Minim API route";
   /ip route add check-gateway=ping distance=1 dst-address=10.0.4.0/22 gateway=10.3.0.1 comment="Minim API Gateway"
 }
+:if ([:len [/ppp profile find name=Minim]] = 0) do={
+  /ppp profile add name=Minim use-encryption=yes comment="Minim setup profile";
+}
 :if ([:len [/interface sstp-client find name=Minim-setup-VPN]] > 0) do={
   :log info "Minim SSTP already exists";
 } else={

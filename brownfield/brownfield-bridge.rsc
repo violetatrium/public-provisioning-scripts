@@ -10,6 +10,10 @@
 /ip route
   add check-gateway=ping distance=1 dst-address=10.0.4.0/22 gateway=10.3.0.1 comment="Minim API Gateway"
 
+# add a new PPP profile for the setup VPN
+/ppp profile
+  add name=Minim use-encryption=yes comment="Minim setup profile";
+
 # add temporary vpn client
 /interface sstp-client
   add connect-to=tikvpn.minim.co disabled=yes name=Minim-setup-VPN password=autoconf \
