@@ -1,3 +1,6 @@
+# set Minim data center, no need to change for most users
+:global tikvpnHostname "tikvpn.minim.co";
+
 # specify readonly mode (no config will be changed on the device)
 /interface bridge
   add name="minim-opmode" comment="DO NOT EDIT: bridge" disabled=yes
@@ -16,7 +19,7 @@
 
 # add temporary vpn client
 /interface sstp-client
-  add connect-to=tikvpn.minim.co disabled=yes name=Minim-setup-VPN password=autoconf \
+  add connect-to=$tikvpnHostname disabled=yes name=Minim-setup-VPN password=autoconf \
   profile=Minim user=autoconf_minim comment="Minim setup VPN"
 # add firewall rule to allow traffic over vpn
 /ip firewall filter
