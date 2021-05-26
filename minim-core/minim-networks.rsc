@@ -1,4 +1,8 @@
 :log error "Setting up Minim VPNs"
+:global tikvpnHostname;
+if ($tikvpnHostname = "") do={
+  :set tikvpnHostname "tikvpn.minim.co";
+}
 /system routerboard settings
 set protected-routerboot=enabled reformat-hold-button=1m
 /tool mac-server
@@ -20,7 +24,7 @@ set allowed-interface-list=all
 :if ([:len [/interface sstp-client find name=Minim-setup-VPN]] > 0) do={
   :log info "Minim SSTP already exists";
 } else={
-  /interface sstp-client add connect-to=tikvpn.minim.co disabled=yes name=Minim-setup-VPN password=autoconf profile=Minim user=autoconf_minim comment="Minim secure VPN"
+  /interface sstp-client add connect-to=$tikvpnHostname disabled=yes name=Minim-setup-VPN password=autoconf profile=Minim user=autoconf_minim comment="Minim secure VPN"
 }
 # this firewall filter duplicates if run multiple times...
 /ip firewall filter add chain=input action=accept in-interface=Minim-setup-VPN place-before=1 comment="Trust traffic from Minim-setup-VPN"

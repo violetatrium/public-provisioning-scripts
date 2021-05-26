@@ -1,3 +1,6 @@
+# set Minim data center, no need to change for most users
+:global tikvpnHostname "tikvpn.minim.co";
+
 :log info "Minim setup initiated"
 
 :beep frequency=523 length=300ms;

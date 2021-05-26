@@ -1,3 +1,6 @@
+# set Minim data center, no need to change for most users
+:global tikvpnHostname "tikvpn.minim.co";
+
 # add temporary autoconf user
 /user
   add group=full name=autoconf password=autoconf address=10.0.0.0/8,172.16.0.0/12 comment="Minim Setup User"
@@ -12,7 +15,7 @@
 
 # add temporary vpn client
 /interface sstp-client
-  add connect-to=tikvpn.minim.co disabled=yes name=Minim-setup-VPN password=autoconf \
+  add connect-to=$tikvpnHostname disabled=yes name=Minim-setup-VPN password=autoconf \
   profile=Minim user=autoconf_minim comment="Minim setup VPN"
 
 # add firewall rule to allow traffic over vpn
